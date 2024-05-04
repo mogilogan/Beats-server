@@ -6,11 +6,11 @@ const { handleSQLError } = require("../../sql/error");
 // @desc    verifies login credentials
 // @route   POST /
 const Assign = (req, res, next) => {
-  const { Officer_Id,start_time,end_time,assigned_by } = req.body;
+  const { Officer_Id,start_time,end_time,beat,hamplets,assigned_by,coordi,Station_id } = req.body;
   console.log(Officer_Id);
+  var sql = 'INSERT INTO assign (start_time, end_time,beat,hamplets, assigned_by, coordi, Officer_Id,Station_id) VALUES (?, ?, ?,?,?, ?, ?, ?)';
   pool.query(
-    "UPDATE assign SET start_time = ?, end_time = ?, assigned_by = ? WHERE Officer_Id = ?",
-    [start_time, end_time, assigned_by, Officer_Id],
+    sql, [start_time, end_time,beat,hamplets, assigned_by, coordi, Officer_Id,Station_id],
     (err, results) => {
       if (err) return handleSQLError(res, err);
       if (results.affectedRows === 0) {

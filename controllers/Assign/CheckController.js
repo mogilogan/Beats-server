@@ -9,13 +9,13 @@ const Check = (req, res, next) => {
   const { Officer_Id } = req.body;
   console.log(Officer_Id);
   pool.query(
-    "SELECT * FROM assign WHERE Officer_Id = '" + Officer_Id + "' ",
+    "SELECT * FROM assign WHERE Officer_Id = '" + Officer_Id + "' AND report IS NULL",
     (err, results) => {
       if (err) return handleSQLError(res, err);
       if (!results.length)
         return res
           .status(404)
-          .send(`User with user_name "${Officer_id}" does not exist.`);
+          .send(`User with user_name "${Officer_Id}" does not exist.`);
 
       return res.status(201).json({
         ...results[0],
