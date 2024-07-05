@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 8000;
 //import routes
 const loginRouter = require("./routes/loginRouter.js");
 const AboutRouter  = require("./routes/aboutRouter.js");
-const AssignRouter  = require("./routes/assignRouter.js");
+const AssignRouter  = require("./routes/beatRouter.js");
 
 //use routes
 app.use("/logins", loginRouter);
@@ -48,19 +48,28 @@ app.use((req, res, next) => {
 });
 
 const locations = {}; // To store the locations of workers
+const socketToWorkerMap = {}; // To map socket IDs to worker IDs
 
 io.on('connection', (socket) => {
-  console.log('A user connected');
+  console.log('A user connected'+ socket.id);
 
   socket.on('workerLocation', (data) => {
     const { workerId, latitude, longitude } = data;
     
 
     locations[workerId] = { latitude, longitude };
+
+    socketToWorkerMap[socket.id] = workerId;
   });
 
   socket.on('disconnect', () => {
     console.log('A user disconnected');
+    const workerId = socketToWorkerMap[socket.id];
+
+    if(workerId){
+      delete locations[workerId];
+      delete socketToWorkerMap[socket.id];
+    }
   });
 });
 
