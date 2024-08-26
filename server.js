@@ -54,10 +54,11 @@ io.on('connection', (socket) => {
   console.log('A user connected'+ socket.id);
 
   socket.on('workerLocation', (data) => {
-    const { workerId, latitude, longitude } = data;
+    console.log(data);
+    const { workerId, latitude, longitude,beat } = data;
     
 
-    locations[workerId] = { latitude, longitude };
+    locations[workerId] = { latitude, longitude,beat };
 
     socketToWorkerMap[socket.id] = workerId;
   });
@@ -75,7 +76,12 @@ io.on('connection', (socket) => {
 
 setInterval(() => {
   // Emitting locations to master client
-  io.emit('currentLocations', locations);
+
+  io.emit('currentLocations', {
+    worker1: { latitude: 40.7128, longitude: -72.006,beat:1 },
+    worker2: { latitude: 34.0522, longitude: -118.2437,beat:2 },
+    worker3: { latitude: 51.5074, longitude: -0.1278,beat:3 }
+  });
   console.log(locations);
 }, 5000);
 
