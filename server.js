@@ -78,9 +78,9 @@ setInterval(() => {
   // Emitting locations to master client
 
   io.emit('currentLocations', {
-    worker1: { latitude: 40.7128, longitude: -72.006,beat:1 },
-    worker2: { latitude: 34.0522, longitude: -118.2437,beat:2 },
-    worker3: { latitude: 51.5074, longitude: -0.1278,beat:3 }
+    worker1: { value:{ latitude: 40.7128, longitude: -72.006},label:"beat1" },
+    worker2: { value:{ latitude: 34.0522, longitude: -118.2437},label:"beat2"},
+    worker3: { value:{ latitude: 51.5074, longitude: -0.1278},label:"beat3" }
   });
   console.log(locations);
 }, 5000);
