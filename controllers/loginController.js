@@ -31,7 +31,7 @@ const userLogin = (req, res, next) => {
           "secret",
           { expiresIn: 5 * 60 * 60 }
         );
-        console.log(userData);
+        
         return res.status(201).json({
           result: token,
           userData,

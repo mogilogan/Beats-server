@@ -28,11 +28,14 @@ const PORT = process.env.PORT || 8000;
 const loginRouter = require("./routes/loginRouter.js");
 const AboutRouter  = require("./routes/aboutRouter.js");
 const AssignRouter  = require("./routes/beatRouter.js");
+const ReportRouter = require("./routes/reportRouter.js")
 
 //use routes
 app.use("/logins", loginRouter);
 app.use("/about", AboutRouter);
 app.use("/assign",AssignRouter);
+app.use("/report",ReportRouter);
+
 
 
 
@@ -58,7 +61,7 @@ io.on('connection', (socket) => {
     const { workerId, latitude, longitude,beat } = data;
     
 
-    locations[workerId] = { latitude, longitude,beat };
+    locations[workerId] = { value:{latitude, longitude},label: String(beat) };
 
     socketToWorkerMap[socket.id] = workerId;
   });
@@ -78,11 +81,13 @@ setInterval(() => {
   // Emitting locations to master client
 
   io.emit('currentLocations', {
-    worker1: { value:{ latitude: 40.7128, longitude: -72.006},label:"beat1" },
-    worker2: { value:{ latitude: 34.0522, longitude: -118.2437},label:"beat2"},
+    PC_3721: {
+      value: { latitude: 37.421998333333335, longitude: -122.084 },
+      label: "1"
+    },    worker2: { value:{ latitude: 34.0522, longitude: -118.2437},label:"beat2"},
     worker3: { value:{ latitude: 51.5074, longitude: -0.1278},label:"beat3" }
   });
-  console.log(locations);
+  // console.log(locations);
 }, 5000);
 
 //make app listen to port 8000
