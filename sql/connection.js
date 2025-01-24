@@ -6,12 +6,14 @@ class Connection {
     if (!this.pool) {
       console.log("creating MySQL connection...".blue.bold);
       this.pool = mysql.createPool({
-
+        connectTimeout  : 60 * 60 * 1000,
+        acquireTimeout  : 60 * 60 * 1000,
+        timeout         : 60 * 60 * 1000,
         connectionLimit: 100,
-        host: "localhost",
-        user: "username",
-        password: "Chicken$4",
-        database: "beat",
+        host: "ebeat-db-shefaoudeen1.h.aivencloud.com",
+        user: "shefaoudeen123@gmail.com",
+        password: "Shefa@1096",
+        database: "Beats",
         port: 3306,
         multipleStatements: true,
       });
